@@ -80,6 +80,133 @@ class SlideGoTransition extends GoTransition {
   PageRouteTransitionsBuilder get builder => none.withSlide.builder;
 }
 
+class SlideFadeGoTransition extends GoTransition {
+  const SlideFadeGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder =>
+      none.toRight.withSlide.withFade.builder;
+}
+
+class FadeScaleGoTransition extends GoTransition {
+  const FadeScaleGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder => none
+      .withStyle(beginScale: 0.92, endScale: 1.0)
+      .withScale
+      .withFade
+      .builder;
+}
+
+class FadeThroughGoTransition extends GoTransition {
+  const FadeThroughGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder => none.withFadeThrough.builder;
+}
+
+class SharedAxisHorizontalGoTransition extends GoTransition {
+  const SharedAxisHorizontalGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder => none.toRight
+      .withStyle(beginScale: 0.98, endScale: 1.0)
+      .withSecondarySlide
+      .withSlide
+      .withFade
+      .builder;
+}
+
+class SharedAxisVerticalGoTransition extends GoTransition {
+  const SharedAxisVerticalGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder => none.toTop
+      .withStyle(beginScale: 0.98, endScale: 1.0)
+      .withSecondarySlide
+      .withSlide
+      .withFade
+      .builder;
+}
+
+class SharedAxisScaleGoTransition extends GoTransition {
+  const SharedAxisScaleGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder => none
+      .withStyle(beginScale: 0.85, endScale: 1.0)
+      .withScale
+      .withFadeThrough
+      .builder;
+}
+
+class ParallaxGoTransition extends GoTransition {
+  const ParallaxGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder =>
+      none.toRight.withSecondarySlide.withSlide.withFade.builder;
+}
+
+class BlurGoTransition extends GoTransition {
+  const BlurGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder =>
+      none.withStyle(blur: 16).withBlur.withFade.builder;
+}
+
+class ContainerTransformGoTransition extends GoTransition {
+  const ContainerTransformGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder {
+    return (route, context, animation, secondaryAnimation, child) {
+      final curvedChild = none
+          .withStyle(beginScale: 0.92, endScale: 1.0)
+          .withScale
+          .withFade
+          .builder(route, context, animation, secondaryAnimation, child);
+
+      return AnimatedBuilder(
+        animation: animation,
+        builder: (context, child) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(28 * (1 - animation.value)),
+            child: child,
+          );
+        },
+        child: curvedChild,
+      );
+    };
+  }
+}
+
+class CircularRevealGoTransition extends GoTransition {
+  const CircularRevealGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder => none.withCircularReveal.builder;
+}
+
+class WipeGoTransition extends GoTransition {
+  const WipeGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder => none.toRight.withWipe.builder;
+}
+
+class CurtainGoTransition extends GoTransition {
+  const CurtainGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder =>
+      none.toTop.withSize.withFade.builder;
+}
+
+class HorizontalFlipGoTransition extends GoTransition {
+  const HorizontalFlipGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder =>
+      none.withHorizontalFlip.withFade.builder;
+}
+
+class VerticalFlipGoTransition extends GoTransition {
+  const VerticalFlipGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder =>
+      none.withVerticalFlip.withFade.builder;
+}
+
 class FadeUpwardsGoTransition extends GoTransition {
   const FadeUpwardsGoTransition();
   @override
@@ -140,7 +267,7 @@ class GoCupertinoPage extends GoTransition implements CupertinoPage {
 class GoCupertinoPageRoute extends CupertinoPageRoute
     with GoPageRoute, TransitionMixin {
   GoCupertinoPageRoute(GoCupertinoPage page)
-      : super(settings: page, builder: (_) => page.child);
+    : super(settings: page, builder: (_) => page.child);
 }
 
 class GoMaterialPage extends GoTransition implements MaterialPage {
@@ -159,9 +286,13 @@ class GoMaterialPage extends GoTransition implements MaterialPage {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    return Theme.of(context)
-        .pageTransitionsTheme
-        .buildTransitions(route, context, animation, secondaryAnimation, child);
+    return Theme.of(context).pageTransitionsTheme.buildTransitions(
+      route,
+      context,
+      animation,
+      secondaryAnimation,
+      child,
+    );
   }
 
   @override
@@ -188,5 +319,5 @@ class GoMaterialPage extends GoTransition implements MaterialPage {
 class GoMaterialPageRoute extends MaterialPageRoute
     with GoPageRoute, TransitionMixin {
   GoMaterialPageRoute(GoMaterialPage page)
-      : super(settings: page, builder: (_) => page.child);
+    : super(settings: page, builder: (_) => page.child);
 }

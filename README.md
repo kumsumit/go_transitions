@@ -85,6 +85,19 @@ Navigator.of(context).push(
 
 Easily create and apply custom transitions such as fade, slide, rotate, scale, and more:
 
+```dart
+GoRoute(
+  path: 'details',
+  builder: (_, __) => const DetailsPage(),
+  pageBuilder: GoTransitions.sharedAxisHorizontal,
+);
+
+GoRoute(
+  path: 'dialog',
+  builder: (_, __) => const MyDialog(),
+  pageBuilder: GoTransitions.centerDialogScaleFade,
+);
+```
 
 ## Transitions
 
@@ -98,18 +111,43 @@ Customizables:
 - scale
 - size
 - slide
+- slideFade
+- fadeScale
+- fadeThrough
+- sharedAxisHorizontal
+- sharedAxisVertical
+- sharedAxisScale
+- parallax
+- blur
+- containerTransform
+- circularReveal
+- wipe
+- curtain
+- horizontalFlip
+- verticalFlip
 - fadeUpwards (Android O)
 - openUpwards (Android P)
 - zoom (Android Q)
+- material3
 - cupertino (iOS/macOS)
+- material
+- macos
+- adaptive
 
 Modifiers:
 
 - withFade
+- withFadeThrough
 - withRotation
 - withScale
 - withSize
 - withSlide
+- withSecondarySlide
+- withBlur
+- withCircularReveal
+- withWipe
+- withHorizontalFlip
+- withVerticalFlip
 - withBackGesture
 - toLeft
 - toRight
@@ -119,8 +157,13 @@ Modifiers:
 Syntax-sugar:
 
 - fullscreenDialog
+- cupertinoFullscreenDialog
 - dialog (RawDialogRoute)
+- centerDialogScaleFade
 - bottomSheet (ModalBottomSheetRoute)
+- bottomSheetDrag
+- sideSheet
+- cupertinoSheet
 
 ## Contribution
 

@@ -106,6 +106,7 @@ extension on GoTransitionStyle {
   GoTransitionStyle get inverted {
     return copyWith(
       offset: offset != null ? -offset! : null,
+      secondaryOffset: secondaryOffset != null ? -secondaryOffset! : null,
       alignment: alignment != null ? -alignment! : null,
       axisAlignment: axisAlignment != null ? -axisAlignment! : null,
     );

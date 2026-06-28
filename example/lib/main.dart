@@ -6,26 +6,104 @@ void main() {
   runApp(const MainApp());
 }
 
+final _transitionDemos = <TransitionDemo>[
+  TransitionDemo('Slide', '/slide', GoTransitions.slide.toRight),
+  TransitionDemo('Slide Fade', '/slide-fade', GoTransitions.slideFade),
+  TransitionDemo('Fade', '/fade', GoTransitions.fade),
+  TransitionDemo('Fade Scale', '/fade-scale', GoTransitions.fadeScale),
+  TransitionDemo('Fade Through', '/fade-through', GoTransitions.fadeThrough),
+  TransitionDemo('Scale', '/scale', GoTransitions.scale),
+  TransitionDemo('Size', '/size', GoTransitions.size.toTop),
+  TransitionDemo('Rotate', '/rotate', GoTransitions.rotate),
+  TransitionDemo(
+    'Shared Axis Horizontal',
+    '/shared-axis-horizontal',
+    GoTransitions.sharedAxisHorizontal,
+  ),
+  TransitionDemo(
+    'Shared Axis Vertical',
+    '/shared-axis-vertical',
+    GoTransitions.sharedAxisVertical,
+  ),
+  TransitionDemo(
+    'Shared Axis Scale',
+    '/shared-axis-scale',
+    GoTransitions.sharedAxisScale,
+  ),
+  TransitionDemo('Parallax', '/parallax', GoTransitions.parallax),
+  TransitionDemo('Blur', '/blur', GoTransitions.blur),
+  TransitionDemo(
+    'Container Transform',
+    '/container-transform',
+    GoTransitions.containerTransform,
+  ),
+  TransitionDemo(
+    'Circular Reveal',
+    '/circular-reveal',
+    GoTransitions.circularReveal,
+  ),
+  TransitionDemo('Wipe', '/wipe', GoTransitions.wipe),
+  TransitionDemo('Curtain', '/curtain', GoTransitions.curtain),
+  TransitionDemo(
+    'Horizontal Flip',
+    '/horizontal-flip',
+    GoTransitions.horizontalFlip,
+  ),
+  TransitionDemo('Vertical Flip', '/vertical-flip', GoTransitions.verticalFlip),
+  TransitionDemo('Material 3', '/material-3', GoTransitions.material3),
+  TransitionDemo('Cupertino', '/cupertino', GoTransitions.cupertino),
+  TransitionDemo('Adaptive Theme', '/adaptive', GoTransitions.adaptive),
+];
+
+final _popupDemos = <PopupDemo>[
+  PopupDemo(
+    'Fullscreen Dialog',
+    '/fullscreen-dialog',
+    GoTransitions.fullscreenDialog,
+  ),
+  PopupDemo(
+    'Cupertino Fullscreen Dialog',
+    '/cupertino-fullscreen-dialog',
+    GoTransitions.cupertinoFullscreenDialog,
+  ),
+  PopupDemo('Dialog', '/dialog', GoTransitions.dialog),
+  PopupDemo(
+    'Scale Fade Dialog',
+    '/scale-fade-dialog',
+    GoTransitions.centerDialogScaleFade,
+  ),
+  PopupDemo('Bottom Sheet', '/bottom-sheet', GoTransitions.bottomSheet),
+  PopupDemo(
+    'Bottom Sheet Drag',
+    '/bottom-sheet-drag',
+    GoTransitions.bottomSheetDrag,
+  ),
+  PopupDemo('Side Sheet', '/side-sheet', GoTransitions.sideSheet),
+  PopupDemo(
+    'Cupertino Sheet',
+    '/cupertino-sheet',
+    GoTransitions.cupertinoSheet,
+  ),
+];
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    /// Set default transition values for the entire app.
-    GoTransition.defaultCurve = Curves.easeInOut;
-    GoTransition.defaultDuration = const Duration(milliseconds: 600);
+    GoTransition.defaultCurve = Curves.easeInOutCubic;
+    GoTransition.defaultDuration = const Duration(milliseconds: 500);
 
     return MaterialApp.router(
-      /// Easily set the default page transitions for the entire app.
-      // theme: ThemeData(
-      //   pageTransitionsTheme: const PageTransitionsTheme(
-      //     builders: {
-      //       TargetPlatform.android: GoTransitions.fadeUpwards,
-      //       TargetPlatform.macOS: GoTransitions.cupertino,
-      //       TargetPlatform.iOS: GoTransitions.cupertino,
-      //     },
-      //   ),
-      // ),
+      theme: ThemeData(
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: GoTransitions.material3,
+            TargetPlatform.iOS: GoTransitions.cupertino,
+            TargetPlatform.macOS: GoTransitions.macos,
+          },
+        ),
+      ),
       routerConfig: GoRouter(
         observers: [GoTransition.observer],
         routes: [
@@ -33,63 +111,27 @@ class MainApp extends StatelessWidget {
             observers: [GoTransition.observer],
             builder: (context, state, child) {
               return Scaffold(
-                appBar: AppBar(
-                  title: Text(state.fullPath.toString()),
-                ),
+                appBar: AppBar(title: Text(state.fullPath ?? 'GoTransitions')),
                 body: child,
               );
             },
             routes: [
               GoRoute(
                 path: '/',
-                builder: (_, __) => const InitialPage(),
-                // pageBuilder: GoTransitions.cupertino,
+                builder: (_, _) => const InitialPage(),
                 routes: [
-                  GoRoute(
-                    path: 'theme/:id',
-                    builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.slide.toRight.withFade.call,
-                  ),
-                  GoRoute(
-                    path: 'slide',
-                    builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.slide.toRight.withBackGesture.call,
-                  ),
-                  GoRoute(
-                    path: 'fade',
-                    builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.fade.withBackGesture.call,
-                  ),
-                  GoRoute(
-                    path: 'size',
-                    builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.size.onPrevious.call,
-                  ),
-                  GoRoute(
-                    path: 'rotate',
-                    builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.rotate.withBackGesture.call,
-                  ),
-                  GoRoute(
-                    path: 'scale',
-                    builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.scale.onPrevious.toRight.call,
-                  ),
-                  GoRoute(
-                    path: 'fullscreen-dialog',
-                    builder: (_, __) => const FullscreenDialogPage(),
-                    pageBuilder: GoTransitions.fullscreenDialog,
-                  ),
-                  GoRoute(
-                    path: 'dialog',
-                    builder: (_, __) => const MyDialog(),
-                    pageBuilder: GoTransitions.dialog,
-                  ),
-                  GoRoute(
-                    path: 'bottom-sheet',
-                    builder: (_, __) => const MyBottomSheet(),
-                    pageBuilder: GoTransitions.bottomSheet,
-                  ),
+                  for (final demo in _transitionDemos)
+                    GoRoute(
+                      path: demo.path.substring(1),
+                      builder: (_, _) => DemoPage(title: demo.title),
+                      pageBuilder: demo.transition.call,
+                    ),
+                  for (final demo in _popupDemos)
+                    GoRoute(
+                      path: demo.path.substring(1),
+                      builder: (_, _) => PopupPage(title: demo.title),
+                      pageBuilder: demo.pageBuilder,
+                    ),
                 ],
               ),
             ],
@@ -100,183 +142,123 @@ class MainApp extends StatelessWidget {
   }
 }
 
+class TransitionDemo {
+  const TransitionDemo(this.title, this.path, this.transition);
+
+  final String title;
+  final String path;
+  final GoTransition transition;
+}
+
+class PopupDemo {
+  const PopupDemo(this.title, this.path, this.pageBuilder);
+
+  final String title;
+  final String path;
+  final GoRouterPageBuilder pageBuilder;
+}
+
 class InitialPage extends StatelessWidget {
   const InitialPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepOrange,
-      appBar: AppBar(
-        title: const Text('InitialPage'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                context.go('/theme/1');
-              },
-              child: const Text('Go to HomePage with .theme'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/slide');
-              },
-              child: const Text('Go to HomePage with .slide'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/rotate');
-              },
-              child: const Text('Go to HomePage with .rotate'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/fade');
-              },
-              child: const Text('Go to HomePage with .fade'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/size');
-              },
-              child: const Text('Go to HomePage with .size'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/scale');
-              },
-              child: const Text('Go to HomePage with .scale'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/fullscreen-dialog');
-              },
-              child: const Text('Go to FullscreenDialogPage'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/dialog');
-              },
-              child: const Text('Go to MyRawDialog'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/bottom-sheet');
-              },
-              child: const Text('Go to MyBottomSheet'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  GoTransitionRoute(
-                    transition: GoTransitions.rotate.withBackGesture,
-                    builder: (context) => const HomePage(),
-                  ),
-                );
-              },
-              child: const Text('Push HomePage with GoTransitionRoute'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepPurple,
-      appBar: AppBar(
-        title: Text('$runtimeType'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.go('/');
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        Text('Transitions', style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 8),
+        for (final demo in _transitionDemos)
+          ListTile(
+            title: Text(demo.title),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.go(demo.path),
+          ),
+        const Divider(height: 32),
+        Text('Popup Routes', style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 8),
+        for (final demo in _popupDemos)
+          ListTile(
+            title: Text(demo.title),
+            trailing: const Icon(Icons.open_in_new),
+            onTap: () => context.go(demo.path),
+          ),
+        const Divider(height: 32),
+        ListTile(
+          title: const Text('Navigator push with GoTransitionRoute'),
+          trailing: const Icon(Icons.navigation),
+          onTap: () {
+            Navigator.of(context).push(
+              GoTransitionRoute(
+                transition: GoTransitions.parallax.withBackGesture,
+                builder: (context) => const DemoPage(title: 'Navigator Push'),
+              ),
+            );
           },
-          child: const Text('Back to InitialPage'),
+        ),
+      ],
+    );
+  }
+}
+
+class DemoPage extends StatelessWidget {
+  const DemoPage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: Colors.deepPurple,
+      child: Center(
+        child: FilledButton(
+          onPressed: () => context.go('/'),
+          child: Text('Back from $title'),
         ),
       ),
     );
   }
 }
 
-class FullscreenDialogPage extends StatelessWidget {
-  const FullscreenDialogPage({super.key});
+class PopupPage extends StatelessWidget {
+  const PopupPage({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.green,
-      appBar: AppBar(
-        title: Text('$runtimeType'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.push('/fullscreen-dialog');
-          },
-          child: const Text('to 2'),
-        ),
-      ),
-    );
+    final isSheet = title.toLowerCase().contains('sheet');
+
+    if (isSheet) {
+      return BottomSheet(
+        onClosing: () {},
+        builder: (_) => _PopupContent(title: title),
+      );
+    }
+
+    return Dialog(child: _PopupContent(title: title));
   }
 }
 
-class MyDialog extends StatelessWidget {
-  const MyDialog({super.key});
+class _PopupContent extends StatelessWidget {
+  const _PopupContent({required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
+    return Padding(
+      padding: const EdgeInsets.all(16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ListTile(
-            title: Text('$runtimeType'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              context.go('/');
-            },
-            child: const Text('Back to InitialPage'),
+          ListTile(title: Text(title)),
+          FilledButton(
+            onPressed: () => context.go('/'),
+            child: const Text('Back to gallery'),
           ),
         ],
       ),
-    );
-  }
-}
-
-class MyBottomSheet extends StatelessWidget {
-  const MyBottomSheet({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomSheet(
-      onClosing: () {},
-      builder: (_) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              title: Text('$runtimeType'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/');
-              },
-              child: const Text('Back to InitialPage'),
-            ),
-          ],
-        );
-      },
     );
   }
 }

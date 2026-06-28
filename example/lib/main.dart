@@ -48,32 +48,32 @@ class MainApp extends StatelessWidget {
                   GoRoute(
                     path: 'theme/:id',
                     builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.slide.toRight.withFade,
+                    pageBuilder: GoTransitions.slide.toRight.withFade.call,
                   ),
                   GoRoute(
                     path: 'slide',
                     builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.slide.toRight.withBackGesture,
+                    pageBuilder: GoTransitions.slide.toRight.withBackGesture.call,
                   ),
                   GoRoute(
                     path: 'fade',
                     builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.fade.withBackGesture,
+                    pageBuilder: GoTransitions.fade.withBackGesture.call,
                   ),
                   GoRoute(
                     path: 'size',
                     builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.size.onPrevious,
+                    pageBuilder: GoTransitions.size.onPrevious.call,
                   ),
                   GoRoute(
                     path: 'rotate',
                     builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.rotate.withBackGesture,
+                    pageBuilder: GoTransitions.rotate.withBackGesture.call,
                   ),
                   GoRoute(
                     path: 'scale',
                     builder: (_, __) => const HomePage(),
-                    pageBuilder: GoTransitions.scale.onPrevious.toRight,
+                    pageBuilder: GoTransitions.scale.onPrevious.toRight.call,
                   ),
                   GoRoute(
                     path: 'fullscreen-dialog',

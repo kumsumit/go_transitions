@@ -40,7 +40,7 @@ class GoTransitionPage extends PageTransitionsBuilder
   @override
   PopInvokedWithResultCallback get onPopInvoked => settings.onPopInvoked;
 
-  static Widget _noPageTransition(_, __, ___, ____, Widget child) => child;
+  static Widget _noPageTransition(_, _, _, _, Widget child) => child;
 
   @override
   bool canUpdate(Page<dynamic> other) {

@@ -28,7 +28,7 @@ class GoTransitionStyle {
   /// The transition [SizeTransition.axis].
   final Axis? axis;
 
-  /// The transition [SizeTransition.axisAlignment].
+  /// The transition [SizeTransition.alignment].
   final double? axisAlignment;
 
   /// The transition [Curve] to use.

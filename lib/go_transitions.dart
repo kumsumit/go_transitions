@@ -1,4 +1,4 @@
-library go_transitions;
+library;
 
 export 'src/go_transition.dart';
 export 'src/go_transition_page.dart' hide GoTransitionScope;

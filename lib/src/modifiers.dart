@@ -126,17 +126,21 @@ extension GoTransitionModifiers on GoTransition {
       builder: (route, context, animation, secondaryAnimation, child) {
         final go = GoTransition.styleOf(context);
 
+        final axis = style.axis ?? go?.axis ?? Axis.vertical;
+        final axisAlign = style.axisAlignment ?? go?.axisAlignment ?? 0.0;
         return Align(
           alignment: style.alignment ?? go?.alignment ?? Alignment.center,
           child: SizeTransition(
             sizeFactor: animation,
-            axis: style.axis ?? go?.axis ?? Axis.vertical,
-            axisAlignment: style.axisAlignment ?? go?.axisAlignment ?? 0.0,
+            axis: axis,
+            alignment: axis == Axis.vertical
+                ? Alignment(0, axisAlign)
+                : Alignment(axisAlign, 0),
             child:
                 builder(route, context, animation, secondaryAnimation, child),
           ),
         );
-      },
+      },     
     );
   }
 

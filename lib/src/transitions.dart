@@ -207,6 +207,100 @@ class VerticalFlipGoTransition extends GoTransition {
       none.withVerticalFlip.withFade.builder;
 }
 
+class AndroidGoTransition extends GoTransition {
+  const AndroidGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder => GoTransitions.material3.builder;
+}
+
+class IOSGoTransition extends GoCupertinoPage {
+  const IOSGoTransition();
+}
+
+class WindowsGoTransition extends GoTransition {
+  const WindowsGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder => none
+      .withStyle(
+        beginScale: 0.965,
+        endScale: 1.0,
+        beginOpacity: 0.0,
+        endOpacity: 1.0,
+      )
+      .withScale
+      .withFade
+      .builder;
+}
+
+class LinuxGoTransition extends GoTransition {
+  const LinuxGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder => none.toTop
+      .withStyle(
+        offset: const Offset(0, 0.08),
+        secondaryOffset: const Offset(0, -0.04),
+        beginOpacity: 0.0,
+        endOpacity: 1.0,
+      )
+      .withSecondarySlide
+      .withSlide
+      .withFade
+      .builder;
+}
+
+class MacOSGoTransition extends GoCupertinoPage {
+  const MacOSGoTransition();
+}
+
+class DesktopGoTransition extends GoTransition {
+  const DesktopGoTransition();
+  @override
+  PageRouteTransitionsBuilder get builder => none
+      .withStyle(beginScale: 0.98, endScale: 1.0)
+      .withScale
+      .withFade
+      .builder;
+}
+
+class AdaptiveGoTransition extends GoTransition {
+  const AdaptiveGoTransition();
+
+  @override
+  PageRouteTransitionsBuilder get builder {
+    return (route, context, animation, secondaryAnimation, child) {
+      final transition = switch (Theme.of(context).platform) {
+        TargetPlatform.iOS => GoTransitions.ios,
+        TargetPlatform.macOS => GoTransitions.macos,
+        TargetPlatform.windows => GoTransitions.windows,
+        TargetPlatform.linux => GoTransitions.linux,
+        TargetPlatform.android ||
+        TargetPlatform.fuchsia => GoTransitions.android,
+      };
+
+      return transition.builder(
+        route,
+        context,
+        animation,
+        secondaryAnimation,
+        child,
+      );
+    };
+  }
+
+  @override
+  Route createRoute(BuildContext context) {
+    final transition = switch (Theme.of(context).platform) {
+      TargetPlatform.iOS => GoTransitions.ios,
+      TargetPlatform.macOS => GoTransitions.macos,
+      TargetPlatform.windows => GoTransitions.windows,
+      TargetPlatform.linux => GoTransitions.linux,
+      TargetPlatform.android || TargetPlatform.fuchsia => GoTransitions.android,
+    };
+
+    return transition.createRoute(context);
+  }
+}
+
 class FadeUpwardsGoTransition extends GoTransition {
   const FadeUpwardsGoTransition();
   @override

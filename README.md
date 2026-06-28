@@ -129,9 +129,16 @@ Customizables:
 - openUpwards (Android P)
 - zoom (Android Q)
 - material3
+- android
+- ios
 - cupertino (iOS/macOS)
 - material
 - macos
+- windows
+- linux
+- fluent
+- gtk
+- desktop
 - adaptive
 
 Modifiers:

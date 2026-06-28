@@ -51,8 +51,16 @@ final _transitionDemos = <TransitionDemo>[
   ),
   TransitionDemo('Vertical Flip', '/vertical-flip', GoTransitions.verticalFlip),
   TransitionDemo('Material 3', '/material-3', GoTransitions.material3),
+  TransitionDemo('Android', '/android', GoTransitions.android),
+  TransitionDemo('iOS', '/ios', GoTransitions.ios),
   TransitionDemo('Cupertino', '/cupertino', GoTransitions.cupertino),
-  TransitionDemo('Adaptive Theme', '/adaptive', GoTransitions.adaptive),
+  TransitionDemo('macOS', '/macos', GoTransitions.macos),
+  TransitionDemo('Windows', '/windows', GoTransitions.windows),
+  TransitionDemo('Linux', '/linux', GoTransitions.linux),
+  TransitionDemo('Fluent', '/fluent', GoTransitions.fluent),
+  TransitionDemo('GTK', '/gtk', GoTransitions.gtk),
+  TransitionDemo('Desktop', '/desktop', GoTransitions.desktop),
+  TransitionDemo('Adaptive Platform', '/adaptive', GoTransitions.adaptive),
 ];
 
 final _popupDemos = <PopupDemo>[
@@ -98,9 +106,11 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         pageTransitionsTheme: const PageTransitionsTheme(
           builders: {
-            TargetPlatform.android: GoTransitions.material3,
-            TargetPlatform.iOS: GoTransitions.cupertino,
+            TargetPlatform.android: GoTransitions.android,
+            TargetPlatform.iOS: GoTransitions.ios,
             TargetPlatform.macOS: GoTransitions.macos,
+            TargetPlatform.windows: GoTransitions.windows,
+            TargetPlatform.linux: GoTransitions.linux,
           },
         ),
       ),

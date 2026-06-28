@@ -34,8 +34,15 @@ mixin GoTransitions {
   static const cupertino = GoCupertinoPage();
   static const material = GoMaterialPage();
   static const material3 = ZoomGoTransition();
-  static const macos = GoCupertinoPage();
-  static const adaptive = ThemeGoTransition();
+  static const android = AndroidGoTransition();
+  static const ios = IOSGoTransition();
+  static const windows = WindowsGoTransition();
+  static const linux = LinuxGoTransition();
+  static const macos = MacOSGoTransition();
+  static const fluent = WindowsGoTransition();
+  static const gtk = LinuxGoTransition();
+  static const desktop = DesktopGoTransition();
+  static const adaptive = AdaptiveGoTransition();
 
   /// Syntax-sugar for building [theme] with [fullscreenDialog] set to `true`.
   static final fullscreenDialog = GoTransitions.theme.build(
